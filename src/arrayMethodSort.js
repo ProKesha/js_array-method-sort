@@ -7,9 +7,28 @@ function applyCustomSort() {
   [].__proto__.sort2 = function (compareFunction) {
     const arr = this;
 
+    if (
+      compareFunction !== undefined &&
+      typeof compareFunction !== 'function'
+    ) {
+      throw new TypeError('Error');
+    }
+
     const compare =
       compareFunction ||
       function (a, b) {
+        if (a === undefined && b === undefined) {
+          return 0;
+        }
+
+        if (a === undefined) {
+          return 1;
+        }
+
+        if (b === undefined) {
+          return -1;
+        }
+
         const A = String(a);
         const B = String(b);
 
